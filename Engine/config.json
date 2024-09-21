@@ -1,0 +1,7 @@
+{
+  "CacheDirLocation": "",
+  "CacheDirName": "",
+  "PluginsLocation": "<SET_THIS!>",
+  "AmountOfExecutionPerThread": 2,
+  "AmountOfThreads": 1
+}
