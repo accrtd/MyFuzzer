@@ -7,4 +7,5 @@ public interface IFuzzerPlugin
     void LoadArgs(string args);
     void SetCacheDir(string path);
     int Execute();
+    IFuzzerPlugin ShallowCopy();
 }
