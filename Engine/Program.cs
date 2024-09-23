@@ -68,7 +68,7 @@ static class Program
         {
             var threadArray = new Thread[_configuration.AmountOfThreads];
             for (int i = 0; i < _configuration.AmountOfThreads; i++)
-                threadArray[i] = new Thread(() => ThreadTask(selectedFuzzer));
+                threadArray[i] = new Thread(() => ThreadTask(selectedFuzzer.ShallowCopy()));
             foreach (var thread in threadArray)
                 thread.Start();
             foreach (var thread in threadArray)
