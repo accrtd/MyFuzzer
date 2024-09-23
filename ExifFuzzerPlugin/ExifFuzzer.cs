@@ -168,4 +168,13 @@ public class ExifFuzzer : IFuzzerPlugin
 
         return Convert.ToByte(string.Join("", listOfBytes.ToArray()), 2);
     }
+
+    /// <summary>
+    /// Make a copy of the object.
+    /// </summary>
+    /// <returns></returns>
+    /// Notes:
+    /// Shared: _args, _originalData, _cacheDirPath, Name, Description
+    /// Not Shared: _iterationCounter
+    public IFuzzerPlugin ShallowCopy() => (ExifFuzzer)this.MemberwiseClone();
 }
