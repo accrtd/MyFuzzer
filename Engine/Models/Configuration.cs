@@ -1,7 +1,7 @@
 ﻿namespace Engine.Models;
 #pragma warning disable CA1812
 
-internal sealed class Configuration
+public sealed class Configuration
 {
     public string? CacheDirLocation { get; set; }
     public required string CacheDirName { get; set; }

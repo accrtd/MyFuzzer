@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<ProjectVersion>1.0.0</ProjectVersion>
+	<ProjectVersion>1.0.1</ProjectVersion>
 	<Version>$(ProjectVersion)-alpha.$([System.DateTime]::Now.ToString("yyMMddhhmmss"))</Version>
 	<FileVersion>$(ProjectVersion)</FileVersion>
     <OutputType>Exe</OutputType>
