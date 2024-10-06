@@ -30,27 +30,32 @@ public class Core
     public void Execute()
     {
         // Load config
-        _config.LoadConfig();
-        CreateCacheDir();
+        _configuration = _config.LoadConfig();
         if (_configuration == null)
         {
             var errMsg = "Config is null!";
             Console.WriteLine($"[ERROR] {errMsg}");
             throw new MissingConfigurationException(errMsg);
         }
-        var pluginPaths = Directory.GetFiles(_configuration.PluginsLocation);
-        if (pluginPaths.ValidateIfNotEmpty("[WARNING] No files found in the plugin location!"))
-            goto ENGINE_END;
-        pluginPaths = pluginPaths.Where(p => p.Contains(".dll", StringComparison.Ordinal)).ToArray();
-        if (pluginPaths.ValidateIfNotEmpty("[WARNING] No dll files found in the plugin location!"))
-            goto ENGINE_END;
-
-        var plugins = pluginPaths.SelectMany(pluginPath =>
+        else
+            CreateCacheDir();
+        List<IFuzzerPlugin>? plugins;
         {
-            var pluginAssembly = _assemblyLoader.LoadPlugin(pluginPath);
-            return _assemblyLoader.InstallPlugin(pluginAssembly);
-        }).ToList();
+            var pluginPaths = Directory.GetFiles(_configuration.PluginsLocation);
+            if (pluginPaths.ValidateIfNotEmpty("[WARNING] No files found in the plugin location!"))
+                goto ENGINE_END;
+            pluginPaths = pluginPaths.Where(p => p.Contains(".dll", StringComparison.Ordinal)).ToArray();
+            if (pluginPaths.ValidateIfNotEmpty("[WARNING] No dll files found in the plugin location!"))
+                goto ENGINE_END;
 
+            plugins = pluginPaths.SelectMany(pluginPath =>
+            {
+                var pluginAssembly = _assemblyLoader.LoadPlugin(pluginPath);
+                return _assemblyLoader.InstallPlugin(pluginAssembly);
+            }).ToList();
+        }
+
+        // Check args
         if (_args.Length == 0)
         {
             Console.WriteLine("[INFO] Installed plugings:");
@@ -126,7 +131,7 @@ public class Core
         {
             if (string.IsNullOrWhiteSpace(_configuration.CacheDirLocation) && string.IsNullOrWhiteSpace(_configuration.CacheDirName))
             {
-                Console.WriteLine("[INFO] Cache directory will not be used");
+                Console.WriteLine("[WARNING] Cache directory will not be used");
                 return "";
             }
             var cacheDirLocation = Path.Combine(_configuration.CacheDirLocation ?? Directory.GetCurrentDirectory(), _configuration.CacheDirName);

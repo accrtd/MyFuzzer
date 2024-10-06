@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <ProjectVersion>1.0.0</ProjectVersion>
+	  <Version>$(ProjectVersion)</Version>
+	  <FileVersion>$(ProjectVersion)</FileVersion>
+	  <AssemblyVersion>$(ProjectVersion)</AssemblyVersion>
+	  <TargetFramework>net8.0</TargetFramework>
+	  <EnableDynamicLoading>true</EnableDynamicLoading>
+	  <AnalysisMode>All</AnalysisMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\PluginBase\PluginBase.csproj">
+		<Private>false</Private>
+		<ExcludeAssets>runtime</ExcludeAssets>
+	</ProjectReference>
+  </ItemGroup>
+
+</Project>
